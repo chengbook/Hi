@@ -1,0 +1,731 @@
+<!DOCTYPE html><html style='font-size:17px'><head>  <meta charset=UTF-8>  <meta name='viewport' content='width=100%, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>  <title>index</title>  
+<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/0343C98A-25FA-4426-BB26-E9373174E1D4/Library/Application Support/MarkDownResources/Styles/GitHub.css"/>
+<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/0343C98A-25FA-4426-BB26-E9373174E1D4/Library/Application Support/MarkDownResources/Highlight/highlight-style/tomorrow.css"/>  
+<script src="/var/mobile/Containers/Data/Application/0343C98A-25FA-4426-BB26-E9373174E1D4/Library/Application Support/MarkDownResources/Highlight/highlightjs/highlight.min.js"></script>
+<script src="/var/mobile/Containers/Data/Application/0343C98A-25FA-4426-BB26-E9373174E1D4/Library/Application Support/MarkDownResources/Highlight/highlightjs/swift.min.js"></script>
+<script src="/var/mobile/Containers/Data/Application/0343C98A-25FA-4426-BB26-E9373174E1D4/Library/Application Support/MarkDownResources/MathJax/tex-mml-chtml.js"></script>  <script>hljs.initHighlightingOnLoad();</script>  <script type='text/x-mathjax-config'>MathJax.Hub.Config({'showProcessingMessages': false, 'messageStyle': 'none'});</script></head><body>  <p>&lt;!DOCTYPE html&gt;<br>
+<html lang="zh-CN"><br>
+<head><br>
+    <meta charset="UTF-8"><br>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><br>
+    <title>漫游日志 · 简易博客</title><br>
+    <style><br>
+        * {<br>
+            margin: 0;<br>
+            padding: 0;<br>
+            box-sizing: border-box;<br>
+        }</p>
+
+<pre><code>    body {
+        background: #f8fafc;
+        font-family: system-ui, -apple-system, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, sans-serif;
+        line-height: 1.5;
+        color: #0f172a;
+        padding: 2rem 1rem;
+    }
+
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    /* 头部 */
+    .blog-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    .blog-header h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #3b82f6, #a855f7);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        letter-spacing: -0.3px;
+    }
+    .blog-header p {
+        color: #475569;
+        margin-top: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* 双栏布局 (大屏) */
+    .grid-panels {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    @media (min-width: 900px) {
+        .grid-panels {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            align-items: start;
+            gap: 2rem;
+        }
+    }
+
+    /* 发布卡片 */
+    .publish-card {
+        background: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        border: 1px solid #e2e8f0;
+        transition: box-shadow 0.2s;
+        backdrop-filter: blur(2px);
+    }
+    .publish-card h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.2rem;
+        color: #1e293b;
+    }
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+    label {
+        font-weight: 500;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.4rem;
+        color: #334155;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 1rem;
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: 0.2s;
+        background: #fff;
+    }
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    .image-zone {
+        background: #f1f5f9;
+        border-radius: 1rem;
+        padding: 1rem;
+        text-align: center;
+        margin-top: 0.3rem;
+        border: 1px dashed #94a3b8;
+    }
+    .img-preview {
+        margin-top: 0.8rem;
+        max-width: 100%;
+        max-height: 160px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #eef2ff;
+        display: none;
+    }
+    .img-preview.show {
+        display: inline-block;
+    }
+    .btn-group {
+        display: flex;
+        gap: 0.8rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    button {
+        border: none;
+        background: #3b82f6;
+        color: white;
+        font-weight: 500;
+        padding: 0.6rem 1.2rem;
+        border-radius: 2rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    button:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+    }
+    button.secondary {
+        background: #f1f5f9;
+        color: #1e293b;
+        border: 1px solid #cbd5e1;
+    }
+    button.secondary:hover {
+        background: #e2e8f0;
+    }
+    button.danger {
+        background: #ef4444;
+    }
+    button.danger:hover {
+        background: #dc2626;
+    }
+    button.warning {
+        background: #f97316;
+    }
+    button:disabled {
+        opacity: 0.6;
+        transform: none;
+        cursor: not-allowed;
+    }
+
+    /* 博客列表区域 */
+    .posts-area {
+        background: transparent;
+    }
+    .posts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        margin-bottom: 1.2rem;
+        padding: 0 0.2rem;
+    }
+    .posts-header h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #0f172a;
+    }
+    .post-count {
+        background: #e2e8f0;
+        padding: 0.2rem 0.7rem;
+        border-radius: 40px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #334155;
+    }
+    .posts-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .blog-card {
+        background: white;
+        border-radius: 1.5rem;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .blog-card:hover {
+        box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+        border-color: #cbd5e1;
+    }
+    .card-content {
+        padding: 1.3rem 1.5rem 1rem 1.5rem;
+    }
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        color: #0f172a;
+        word-break: break-word;
+    }
+    .card-meta {
+        font-size: 0.7rem;
+        color: #64748b;
+        margin-bottom: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .card-img {
+        max-width: 100%;
+        max-height: 260px;
+        object-fit: cover;
+        border-radius: 1rem;
+        margin: 0.8rem 0;
+        width: 100%;
+        background: #f8fafc;
+    }
+    .card-text {
+        color: #1e293b;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+        line-height: 1.5;
+        margin: 0.6rem 0;
+    }
+    .card-actions {
+        padding: 0.8rem 1.5rem 1.2rem 1.5rem;
+        border-top: 1px solid #f0f2f5;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .delete-btn {
+        background: none;
+        color: #ef4444;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.75rem;
+        border-radius: 2rem;
+        border: 1px solid #fee2e2;
+    }
+    .delete-btn:hover {
+        background: #fee2e2;
+        transform: none;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1.5rem;
+        background: white;
+        border-radius: 1.5rem;
+        border: 1px dashed #cbd5e1;
+        color: #64748b;
+    }
+    footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        border-top: 1px solid #e2e8f0;
+    }
+    .toast-msg {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #0f172a;
+        color: white;
+        padding: 0.5rem 1.2rem;
+        border-radius: 40px;
+        font-size: 0.8rem;
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+    }
+&lt;/style&gt;
+</code></pre>
+
+<p></head><br>
+<body><br>
+<div class="container"><br>
+    <div class="blog-header"><br>
+        <h1>✍️ 漫游日志</h1><br>
+        <p>文字与影像 · 片刻即永恒</p><br>
+    </div></p>
+
+<pre><code>&lt;div class=&quot;grid-panels&quot;&gt;
+    &lt;!-- 左侧发布区 --&gt;
+    &lt;div class=&quot;publish-card&quot;&gt;
+        &lt;h2&gt;📝 写点新东西&lt;/h2&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label&gt;标题&lt;/label&gt;
+            &lt;input type=&quot;text&quot; id=&quot;postTitle&quot; placeholder=&quot;给这篇文章一个名字...&quot; maxlength=&quot;80&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label&gt;正文&lt;/label&gt;
+            &lt;textarea id=&quot;postContent&quot; placeholder=&quot;写下你的思绪、故事或是灵光一现……&quot;&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label&gt;📸 配图 (可选)&lt;/label&gt;
+            &lt;div class=&quot;image-zone&quot;&gt;
+                &lt;input type=&quot;file&quot; id=&quot;imageInput&quot; accept=&quot;image/jpeg,image/png,image/webp,image/gif&quot;&gt;
+                &lt;div style=&quot;margin-top: 8px;&quot;&gt;
+                    &lt;img id=&quot;imagePreview&quot; class=&quot;img-preview&quot; alt=&quot;预览图&quot;&gt;
+                &lt;/div&gt;
+                &lt;p style=&quot;font-size: 0.7rem; margin-top: 8px; color: #5b6e8c;&quot;&gt;支持 JPG/PNG/WEBP，自动压缩适配&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;btn-group&quot;&gt;
+            &lt;button id=&quot;publishBtn&quot;&gt;✨ 发布文章&lt;/button&gt;
+            &lt;button id=&quot;clearFormBtn&quot; class=&quot;secondary&quot; type=&quot;button&quot;&gt;清空草稿&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 右侧博客列表 --&gt;
+    &lt;div class=&quot;posts-area&quot;&gt;
+        &lt;div class=&quot;posts-header&quot;&gt;
+            &lt;h2&gt;📖 时光手记&lt;/h2&gt;
+            &lt;span class=&quot;post-count&quot; id=&quot;postCount&quot;&gt;0篇&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;postsContainer&quot; class=&quot;posts-grid&quot;&gt;
+            &lt;!-- 动态渲染文章 --&gt;
+            &lt;div class=&quot;empty-state&quot;&gt;✨ 暂无文章，写点什么吧 ~&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style=&quot;margin-top: 1.2rem; text-align: right;&quot;&gt;
+            &lt;button id=&quot;clearAllBtn&quot; class=&quot;warning secondary&quot; style=&quot;background:#fff1f0; border-color:#fed7d7;&quot;&gt;🗑️ 清空所有文章&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;footer&gt;
+    🌿 数据保存在此浏览器中 | 换设备不共享 | 安心记录
+&lt;/footer&gt;
+</code></pre>
+
+<p></div><br>
+<div id="toastMsg" class="toast-msg"></div></p>
+
+<script>
+    // ---------- 存储KEY ----------
+    const STORAGE_KEY = "simple_blog_posts";
+
+    // ---------- 全局变量 ----------
+    let posts = [];            // 文章数组 { id, title, content, imageBase64, date }
+    let pendingImageFile = null;      // 未发布的临时图片文件对象
+    let isPublishing = false;
+
+    // DOM 元素
+    const titleInput = document.getElementById('postTitle');
+    const contentInput = document.getElementById('postContent');
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const publishBtn = document.getElementById('publishBtn');
+    const clearFormBtn = document.getElementById('clearFormBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const postsContainer = document.getElementById('postsContainer');
+    const postCountSpan = document.getElementById('postCount');
+
+    // ---------- 辅助函数：提示浮层 ----------
+    function showToast(message, duration = 2200) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, duration);
+    }
+
+    // ---------- 图片压缩 (返回base64, 自动限制宽度&质量) ----------
+    function compressImageToBase64(file, maxWidth = 850, quality = 0.75) {
+        return new Promise((resolve, reject) => {
+            if (!file || !file.type.match('image.*')) {
+                resolve('');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    // 计算缩放比例
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    // 绘制白色背景 (避免透明变黑)
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // 根据原类型决定输出格式，优先 JPEG 减少体积，但保留透明图会失真 -> 若原图是png无透明区域也ok，兼顾体积使用jpeg
+                    let mimeType = 'image/jpeg';
+                    // 如果是 png 且可能存在透明，保留 png 但质量稍降
+                    if (file.type === 'image/png') {
+                        mimeType = 'image/png';
+                    } else if (file.type === 'image/webp') {
+                        mimeType = 'image/webp';
+                    } else {
+                        mimeType = 'image/jpeg';
+                    }
+                    const finalQuality = (mimeType === 'image/png') ? 0.85 : quality;
+                    const base64 = canvas.toDataURL(mimeType, finalQuality);
+                    resolve(base64);
+                };
+                img.onerror = () => reject(new Error('图片加载失败'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('文件读取失败'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // 预览图片 (本地快速预览，不压缩，仅视觉)
+    function previewLocalImage(file) {
+        if (!file) {
+            imagePreview.classList.remove('show');
+            imagePreview.src = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+            imagePreview.classList.add('show');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // 重置表单 (清除输入和图片预览)
+    function resetForm() {
+        titleInput.value = '';
+        contentInput.value = '';
+        imageInput.value = '';
+        imagePreview.classList.remove('show');
+        imagePreview.src = '';
+        pendingImageFile = null;
+    }
+
+    // 渲染所有文章
+    function renderPosts() {
+        if (!postsContainer) return;
+        if (!posts.length) {
+            postsContainer.innerHTML = `<div class="empty-state">📭 还没有任何文章，点击左侧「发布文章」开始记录吧~</div>`;
+            postCountSpan.innerText = '0篇';
+            return;
+        }
+        postCountSpan.innerText = posts.length + (posts.length > 1 ? '篇' : '篇');
+        let html = '';
+        for (let i = 0; i < posts.length; i++) {
+            const post = posts[i];
+            // 安全处理正文换行
+            const safeContent = escapeHtml(post.content);
+            // 图片展示（如果有）
+            let imageHtml = '';
+            if (post.imageBase64 && post.imageBase64.trim() !== '') {
+                imageHtml = `<img class="card-img" src="${post.imageBase64}" alt="博客配图" loading="lazy">`;
+            }
+            html += `
+                <div class="blog-card" data-id="${post.id}">
+                    <div class="card-content">
+                        <div class="card-title">${escapeHtml(post.title) || '无题'}</div>
+                        <div class="card-meta">
+                            <span>📅 ${post.date}</span>
+                        </div>
+                        ${imageHtml}
+                        <div class="card-text" style="white-space: pre-wrap;">${safeContent}</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="delete-btn" data-id="${post.id}">🗑️ 删除</button>
+                    </div>
+                </div>
+            `;
+        }
+        postsContainer.innerHTML = html;
+
+        // 绑定删除按钮事件
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.getAttribute('data-id'));
+                deletePostById(id);
+            });
+        });
+    }
+
+    // 简单的防XSS转义
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 保存文章到 localStorage 并重新渲染
+    function savePostsToLocal() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+        renderPosts();
+    }
+
+    // 删除文章
+    function deletePostById(id) {
+        const index = posts.findIndex(p => p.id === id);
+        if (index !== -1) {
+            posts.splice(index, 1);
+            savePostsToLocal();
+            showToast('✖️ 文章已删除', 1500);
+        }
+    }
+
+    // 清空所有文章（二次确认）
+    function clearAllPosts() {
+        if (posts.length === 0) {
+            showToast('📭 目前没有文章可清空', 1200);
+            return;
+        }
+        const confirmClear = confirm('⚠️ 此操作将清空你所有的博客文章，且无法恢复！确定要清空吗？');
+        if (confirmClear) {
+            posts = [];
+            savePostsToLocal();
+            showToast('✨ 已清空所有文章', 1600);
+            resetForm();
+        }
+    }
+
+    // 添加新文章 (核心)
+    async function publishNewPost() {
+        if (isPublishing) {
+            showToast('⏳ 正在发布中，请稍后...', 1000);
+            return;
+        }
+        const title = titleInput.value.trim();
+        const content = contentInput.value.trim();
+        if (!title && !content) {
+            showToast('❓ 至少填写标题或正文内容吧～', 1800);
+            return;
+        }
+        if (!title) {
+            showToast('📌 请填写一个标题', 1500);
+            return;
+        }
+        // 开始发布
+        isPublishing = true;
+        publishBtn.disabled = true;
+        publishBtn.textContent = '⏳ 发布中...';
+
+        try {
+            let finalImageBase64 = '';
+            // 如果有待上传的图片文件，压缩转换
+            if (pendingImageFile) {
+                try {
+                    finalImageBase64 = await compressImageToBase64(pendingImageFile, 900, 0.72);
+                    if (!finalImageBase64) {
+                        showToast('🖼️ 图片处理失败，将不包含图片发布', 1500);
+                    } else {
+                        showToast('🖼️ 图片已压缩并嵌入', 1200);
+                    }
+                } catch (err) {
+                    console.warn(err);
+                    showToast('⚠️ 图片压缩失败，跳过图片', 1500);
+                    finalImageBase64 = '';
+                }
+            }
+
+            const newPost = {
+                id: Date.now(),
+                title: title.slice(0, 100),
+                content: content || '（无正文）',
+                imageBase64: finalImageBase64 || '',
+                date: new Date().toLocaleString('zh-CN', { hour12: false })
+            };
+            posts.unshift(newPost);   // 最新文章在上方
+            savePostsToLocal();
+            // 重置表单
+            resetForm();
+            showToast(`🎉 文章《${escapeHtml(title.slice(0, 30))}》发布成功！`, 2000);
+        } catch (error) {
+            console.error(error);
+            showToast('😭 发布失败，请重试', 2000);
+        } finally {
+            isPublishing = false;
+            publishBtn.disabled = false;
+            publishBtn.textContent = '✨ 发布文章';
+        }
+    }
+
+    // 清空草稿
+    function clearDraft() {
+        if (titleInput.value.trim() !== '' || contentInput.value.trim() !== '' || pendingImageFile !== null) {
+            if (confirm('清空草稿会丢失未发布的内容，确定清空吗？')) {
+                resetForm();
+                showToast('🍃 草稿已清空', 1200);
+            }
+        } else {
+            showToast('📭 没有需要清空的草稿', 1000);
+        }
+    }
+
+    // 图片选择的监听
+    function bindImageUpload() {
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) {
+                pendingImageFile = null;
+                imagePreview.classList.remove('show');
+                imagePreview.src = '';
+                return;
+            }
+            // 检验大小 限制 12MB 以内 (压缩会降质)
+            if (file.size > 12 * 1024 * 1024) {
+                showToast('⚠️ 图片超过12MB，请选择较小的图片', 2000);
+                imageInput.value = '';
+                pendingImageFile = null;
+                imagePreview.classList.remove('show');
+                return;
+            }
+            pendingImageFile = file;
+            previewLocalImage(file);
+        });
+    }
+
+    // 加载存储的文章
+    function loadPostsFromStorage() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                posts = JSON.parse(stored);
+                // 确保每个文章都有必要字段，并且兼容旧数据
+                if (!Array.isArray(posts)) posts = [];
+                posts = posts.filter(p => p && typeof p === 'object').map(p => {
+                    return {
+                        id: p.id || Date.now() + Math.random(),
+                        title: p.title || '无标题',
+                        content: p.content || '',
+                        imageBase64: p.imageBase64 || '',
+                        date: p.date || new Date().toLocaleString('zh-CN')
+                    };
+                });
+            } catch(e) { posts = []; }
+        }
+        // 如果没有文章，添加一篇示例演示（让博客不空，且友好）
+        if (posts.length === 0) {
+            const demoImage = ''; // 不预设图片，避免长base64
+            const demoPost = {
+                id: 1700000000000,
+                title: '🌱 欢迎来到你的博客',
+                content: '在这里，你可以上传图片和文字记录生活。\n\n✨ 点左侧「发布文章」试试：\n- 写一段文字\n- 选一张照片（会自动压缩）\n- 点击发布，文章就会出现在右侧～\n\n所有数据都存在你自己的浏览器里，关闭页面也不会丢失。',
+                imageBase64: '',
+                date: new Date().toLocaleString('zh-CN')
+            };
+            const demoPost2 = {
+                id: 1700000000001,
+                title: '📸 图片示例',
+                content: '你可以为文章配图，分享所见之美。点击删除按钮可移除文章。',
+                imageBase64: '',
+                date: new Date().toLocaleString('zh-CN')
+            };
+            posts = [demoPost, demoPost2];
+            savePostsToLocal();
+        } else {
+            renderPosts();
+        }
+    }
+
+    // ---------- 初始化事件绑定 ----------
+    function init() {
+        loadPostsFromStorage();
+        bindImageUpload();
+        publishBtn.addEventListener('click', publishNewPost);
+        clearFormBtn.addEventListener('click', clearDraft);
+        clearAllBtn.addEventListener('click', clearAllPosts);
+        // 额外防抖：回车不提交
+        const formInputs = [titleInput, contentInput];
+        formInputs.forEach(inp => {
+            inp.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && e.target === titleInput) {
+                    e.preventDefault();
+                    publishNewPost();
+                }
+            });
+        });
+        // 如果用户重新选择文件但未发布，预览已经ok
+    }
+
+    // 启动
+    init();
+</script>
+
+<p></body><br>
+</html></p>
+<script>window.webkit.messageHandlers.TextLoaded.postMessage('TextLoaded')</script></body></html>
